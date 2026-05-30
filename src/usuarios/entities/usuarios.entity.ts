@@ -10,11 +10,14 @@ export class Usuarios {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ length: 100 })
+  @Column({ length: 255 })
   nome!: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 255, unique: true })
   email!: string;
+
+  @Column({ length: 255 })
+  senha!: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   criado_em!: Date;
