@@ -1,9 +1,11 @@
+import { UsuariosModule } from './usuarios/usuarios.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
+    UsuariosModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
