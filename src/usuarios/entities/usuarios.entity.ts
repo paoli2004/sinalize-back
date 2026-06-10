@@ -16,7 +16,7 @@ export class Usuarios {
   @Column({ length: 255, unique: true })
   email!: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 20, select: false })
   senha!: string;
 
   @CreateDateColumn({ type: 'timestamp' })

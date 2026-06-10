@@ -6,22 +6,31 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-
-const invalidMessage = 'Preencha um valor válido para o campo';
+import { ValidationMessagesHelper } from '../../common/helpers/validationMessages.helper';
 
 export class CreateUsuarioDto {
-  @IsString({ message: invalidMessage })
-  @IsNotEmpty({ message: invalidMessage })
+  @IsString({ message: ValidationMessagesHelper.invalidMessage('nome') })
+  @IsNotEmpty({ message: ValidationMessagesHelper.requiredMessage('nome') })
+  @MaxLength(255, {
+    message: ValidationMessagesHelper.MaxLengthMessage('nome', 255),
+  })
   nome!: string;
 
-  @IsEmail({}, { message: 'O e-mail informado é inválido' })
-  @IsNotEmpty({ message: invalidMessage })
+  @IsEmail({}, { message: ValidationMessagesHelper.invalidEmailMessage() })
+  @IsNotEmpty({ message: ValidationMessagesHelper.requiredMessage('email') })
+  @MaxLength(255, {
+    message: ValidationMessagesHelper.MaxLengthMessage('email', 255),
+  })
   email!: string;
 
-  @IsString({ message: invalidMessage })
-  @IsNotEmpty({ message: invalidMessage })
-  @MinLength(6, { message: 'A senha deve conter no mínimo 6 caracteres.' })
-  @MaxLength(20, { message: 'A senha deve conter no máximo 20 caracteres.' })
+  @IsString({ message: ValidationMessagesHelper.invalidMessage('senha') })
+  @IsNotEmpty({ message: ValidationMessagesHelper.requiredMessage('senha') })
+  @MinLength(6, {
+    message: ValidationMessagesHelper.MinLengthMessage('senha', 6),
+  })
+  @MaxLength(20, {
+    message: ValidationMessagesHelper.MaxLengthMessage('senha', 20),
+  })
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message:
       'A senha deve conter pelo menos 1 letra maiúscula, 1 minúscula e 1 número.',
