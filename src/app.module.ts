@@ -4,12 +4,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriasModule } from './categorias/categorias.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
+import { PalavrasModule } from './palavras/palavras.module';
 
 @Module({
   imports: [
     UsuariosModule,
     CategoriasModule,
     QuizzesModule,
+    PalavrasModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

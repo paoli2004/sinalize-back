@@ -5,8 +5,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Usuarios } from '../../usuarios/entities/usuarios.entity';
+import { Categorias } from '../../categorias/entities/categorias.entity';
 
 @Entity({ name: 'palavras' })
 export class Palavras {
@@ -32,4 +35,13 @@ export class Palavras {
 
   @Column({ type: 'timestamp', nullable: true })
   atualizado_em?: Date;
+
+  // implementar no service
+  // @ManyToMany(() => Categorias, (categoria) => categoria.palavras)
+  // @JoinTable({
+  //   name: 'palavras_categorias',
+  //   joinColumn: { name: 'palavra_id', referencedColumnName: 'id' },
+  //   inverseJoinColumn: { name: 'categoria_id', referencedColumnName: 'id' },
+  // })
+  // categorias!: Categorias[];
 }

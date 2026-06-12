@@ -7,7 +7,6 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-
 import { Usuarios } from '../../usuarios/entities/usuarios.entity';
 import { QuizPalavra } from './quiz_palavras.entity';
 

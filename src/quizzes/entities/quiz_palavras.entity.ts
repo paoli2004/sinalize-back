@@ -13,23 +13,19 @@ export class QuizPalavra {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ name: 'id_quiz' })
-  id_quiz!: number;
+  @Column({ type: 'boolean', nullable: true })
+  acertou?: boolean;
 
-  @Column({ name: 'id_palavra' })
-  id_palavra!: number;
+  @Column({ type: 'timestamp', name: 'respondido_em', nullable: true })
+  respondido_em?: Date;
 
-  @Column({ nullable: true })
-  acertou!: boolean;
-
-  @Column({ name: 'respondido_em', nullable: true })
-  respondido_em!: Date;
-
-  @ManyToOne(() => Quizzes, (quiz) => quiz.quiz_palavras)
+  @ManyToOne(() => Quizzes, (quiz) => quiz.quiz_palavras, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_quiz' })
   quiz!: Quizzes;
 
-  @ManyToOne(() => Palavras)
+  @ManyToOne(() => Palavras, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'id_palavra' })
   palavra!: Palavras;
 }

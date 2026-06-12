@@ -5,8 +5,10 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { Usuarios } from '../../usuarios/entities/usuarios.entity';
+import { Palavras } from '../../palavras/entities/palavras.entity';
 
 @Entity({ name: 'categorias' })
 export class Categorias {
@@ -32,4 +34,8 @@ export class Categorias {
 
   @Column({ type: 'timestamp', nullable: true })
   atualizado_em?: Date;
+
+  // implementar no service
+  // @ManyToMany(() => Palavras, (palavra) => palavra.categorias)
+  // palavras!: Palavras[]
 }
