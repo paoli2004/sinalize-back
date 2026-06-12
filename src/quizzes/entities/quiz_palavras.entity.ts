@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Quiz } from './quiz.entity';
+import { Quizzes } from './quizzes.entity';
 import { Palavras } from '../../palavras/entities/palavras.entity';
 
 @Entity('quiz_palavras')
@@ -25,9 +25,9 @@ export class QuizPalavra {
   @Column({ name: 'respondido_em', nullable: true })
   respondido_em!: Date;
 
-  @ManyToOne(() => Quiz, (quiz) => quiz.quiz_palavras)
+  @ManyToOne(() => Quizzes, (quiz) => quiz.quiz_palavras)
   @JoinColumn({ name: 'id_quiz' })
-  quiz!: Quiz;
+  quiz!: Quizzes;
 
   @ManyToOne(() => Palavras)
   @JoinColumn({ name: 'id_palavra' })

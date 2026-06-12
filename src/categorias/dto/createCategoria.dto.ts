@@ -5,7 +5,7 @@ export class CreateCategoriaDto {
   @IsString({ message: ValidationMessagesHelper.invalidMessage('nome') })
   @IsNotEmpty({ message: ValidationMessagesHelper.requiredMessage('nome') })
   @MaxLength(255, {
-    message: ValidationMessagesHelper.MaxLengthMessage('nome', 255),
+    message: ValidationMessagesHelper.maxLengthMessage('nome', 255),
   })
   nome!: string;
 
@@ -14,7 +14,7 @@ export class CreateCategoriaDto {
     message: ValidationMessagesHelper.requiredMessage('descricao'),
   })
   @MaxLength(400, {
-    message: ValidationMessagesHelper.MaxLengthMessage('descricao', 400),
+    message: ValidationMessagesHelper.maxLengthMessage('descricao', 400),
   })
   descricao!: string;
 }

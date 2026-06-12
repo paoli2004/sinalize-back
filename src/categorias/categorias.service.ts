@@ -45,7 +45,6 @@ export class CategoriasService {
     return await this.categoriasRepository.find({
       relations: {
         criado_por: true,
-
         atualizado_por: true,
       },
       select: {

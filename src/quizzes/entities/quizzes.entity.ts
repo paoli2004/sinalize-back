@@ -12,7 +12,7 @@ import { Usuarios } from '../../usuarios/entities/usuarios.entity';
 import { QuizPalavra } from './quiz_palavras.entity';
 
 @Entity('quizzes')
-export class Quiz {
+export class Quizzes {
   @PrimaryGeneratedColumn()
   id!: number;
 

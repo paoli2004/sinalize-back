@@ -11,11 +11,11 @@ export class ValidationMessagesHelper {
     return 'O e-mail informado é inválido';
   }
 
-  static MinLengthMessage(campo: string, min: number): string {
+  static minLengthMessage(campo: string, min: number): string {
     return `O campo ${campo} deve conter no mínimo ${min} caracteres.`;
   }
 
-  static MaxLengthMessage(campo: string, max: number): string {
+  static maxLengthMessage(campo: string, max: number): string {
     return `O campo ${campo} deve conter no máximo ${max} caracteres.`;
   }
 }
