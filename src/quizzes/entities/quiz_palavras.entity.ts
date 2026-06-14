@@ -9,7 +9,7 @@ import { Quizzes } from './quizzes.entity';
 import { Palavras } from '../../palavras/entities/palavras.entity';
 
 @Entity('quiz_palavras')
-export class QuizPalavra {
+export class QuizPalavras {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -21,11 +21,15 @@ export class QuizPalavra {
 
   @ManyToOne(() => Quizzes, (quiz) => quiz.quiz_palavras, {
     onDelete: 'CASCADE',
+    nullable: false,
   })
   @JoinColumn({ name: 'id_quiz' })
   quiz!: Quizzes;
 
-  @ManyToOne(() => Palavras, { onDelete: 'RESTRICT' })
+  @ManyToOne(() => Palavras, {
+    onDelete: 'RESTRICT',
+    nullable: false,
+  })
   @JoinColumn({ name: 'id_palavra' })
   palavra!: Palavras;
 }

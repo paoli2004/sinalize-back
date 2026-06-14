@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Usuarios } from '../../usuarios/entities/usuarios.entity';
-import { QuizPalavra } from './quiz_palavras.entity';
+import { QuizPalavras } from './quiz_palavras.entity';
 
 @Entity('quizzes')
 export class Quizzes {
@@ -25,6 +25,6 @@ export class Quizzes {
   @JoinColumn({ name: 'id_usuario' })
   usuario!: Usuarios;
 
-  @OneToMany(() => QuizPalavra, (qp) => qp.quiz)
-  quiz_palavras!: QuizPalavra[];
+  @OneToMany(() => QuizPalavras, (qp) => qp.quiz)
+  quiz_palavras!: QuizPalavras[];
 }

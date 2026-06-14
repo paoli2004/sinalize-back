@@ -1,10 +1,13 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
   Param,
+  ParseArrayPipe,
   ParseIntPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { QuizzesService } from './quizzes.service';
 
@@ -23,13 +26,31 @@ export class QuizzesController {
   }
 
   @Post()
-  async createQuiz() {
-    const usuarioId = 1;
+  async create(@Query('categoriaIds') categoriaIdsString: string) {
+    const usuarioLogadoId = 1;
 
-    const newQuiz = await this.quizzesService.createQuiz(usuarioId);
+    if (!categoriaIdsString) {
+      throw new BadRequestException('O parâmetro categoriaIds é obrigatório.');
+    }
+
+    const categoriaIds = categoriaIdsString
+      .split(',')
+      .map((id) => parseInt(id.trim(), 10))
+      .filter((id) => !isNaN(id));
+
+    if (categoriaIds.length === 0) {
+      throw new BadRequestException(
+        'Informe pelo menos um ID de categoria válido.',
+      );
+    }
+
+    const newQuiz = await this.quizzesService.createQuiz(
+      usuarioLogadoId,
+      categoriaIds,
+    );
 
     return {
-      message: 'Quiz criado com sucesso!',
+      message: 'Quiz criado com sucesso',
       quiz: newQuiz,
     };
   }
