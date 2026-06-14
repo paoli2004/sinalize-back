@@ -35,7 +35,6 @@ export class Categorias {
   @Column({ type: 'timestamp', nullable: true })
   atualizado_em?: Date;
 
-  // implementar no service
-  // @ManyToMany(() => Palavras, (palavra) => palavra.categorias)
-  // palavras!: Palavras[]
+  @ManyToMany(() => Palavras, (palavra) => palavra.categorias)
+  palavras!: Palavras[];
 }

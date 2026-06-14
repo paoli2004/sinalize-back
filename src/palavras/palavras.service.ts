@@ -2,16 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Palavras } from './entities/palavras.entity';
-import { CreatePalavrasDto } from './dto/createPalavras.dto';
+import { CreatePalavraDto } from './dto/createPalavra.dto';
 import { findOrFail } from '../common/utils/query.util';
-import { NOMEM } from 'dns';
-import { UpdatePalavrasDto } from './dto/updatePalavras.dto';
+import { UpdatePalavraDto } from './dto/updatePalavra.dto';
+import { Categorias } from '../categorias/entities/categorias.entity';
 
 @Injectable()
 export class PalavrasService {
   constructor(
     @InjectRepository(Palavras)
     private palavrasRepository: Repository<Palavras>,
+    @InjectRepository(Categorias)
+    private categoriasRepository: Repository<Categorias>,
   ) {}
 
   async findPalavra(id: number): Promise<Palavras> {
@@ -21,6 +23,7 @@ export class PalavrasService {
         relations: {
           criado_por: true,
           atualizado_por: true,
+          categorias: true,
         },
         select: {
           id: true,
@@ -36,6 +39,10 @@ export class PalavrasService {
             id: true,
             nome: true,
           },
+          categorias: {
+            id: true,
+            nome: true,
+          },
         },
       }),
       'Palavra não encontrada.',
@@ -47,6 +54,7 @@ export class PalavrasService {
       relations: {
         criado_por: true,
         atualizado_por: true,
+        categorias: true,
       },
       select: {
         id: true,
@@ -61,19 +69,25 @@ export class PalavrasService {
           id: true,
           nome: true,
         },
+        categorias: {
+          id: true,
+          nome: true,
+        },
       },
       order: { criado_em: 'ASC' },
     });
   }
 
-  async createPalavras(
-    createPalavrasDto: CreatePalavrasDto,
-  ): Promise<Palavras> {
+  async createPalavras(createPalavraDto: CreatePalavraDto): Promise<Palavras> {
+    const { categoryIds, ...dadosDaPalavra } = createPalavraDto;
     const usuarioId = 1;
 
+    await this.validateCategoryIds(categoryIds);
+
     const palavra = this.palavrasRepository.create({
-      ...createPalavrasDto,
+      ...dadosDaPalavra,
       criado_por: { id: usuarioId } as any,
+      categorias: categoryIds.map((catId) => ({ id: catId })) as any,
     });
 
     const novaPalavra = await this.palavrasRepository.save(palavra);
@@ -88,7 +102,7 @@ export class PalavrasService {
 
   async updatePalavra(
     id: number,
-    updatePalavrasDto: UpdatePalavrasDto,
+    updatePalavraDto: UpdatePalavraDto,
   ): Promise<Palavras> {
     const usuarioId = 1;
 
@@ -97,10 +111,22 @@ export class PalavrasService {
       'Palavra não encontrada.',
     );
 
-    const updatedPalavra = Object.assign(palavra, updatePalavrasDto, {
+    const { categoryIds, ...dadosAtualizados } = updatePalavraDto;
+
+    if (categoryIds && categoryIds.length > 0) {
+      await this.validateCategoryIds(categoryIds);
+    }
+    
+    const updatedPalavra = Object.assign(palavra, dadosAtualizados, {
       atualizado_por: { id: usuarioId } as any,
       atualizado_em: new Date(),
     });
+
+    if (categoryIds) {
+      updatedPalavra.categorias = categoryIds.map((catId) => ({
+        id: catId,
+      })) as any;
+    }
 
     const palavraSalva = await this.palavrasRepository.save(updatedPalavra);
 
@@ -109,6 +135,7 @@ export class PalavrasService {
       relations: {
         criado_por: true,
         atualizado_por: true,
+        categorias: true,
       },
     })) as Palavras;
   }
@@ -120,5 +147,16 @@ export class PalavrasService {
     );
 
     await this.palavrasRepository.remove(palavra);
+  }
+
+  async validateCategoryIds(categoryIds: number[]): Promise<void> {
+    const validate = categoryIds.map((catId) =>
+      findOrFail(
+        this.categoriasRepository.findOne({ where: { id: catId } }),
+        `Categoria com id ${catId} não encontrada.`,
+      ),
+    );
+
+    await Promise.all(validate);
   }
 }

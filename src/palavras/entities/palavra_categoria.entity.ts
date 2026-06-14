@@ -1,22 +1,24 @@
-import { Entity, ManyToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+import { Entity, ManyToOne, JoinColumn, PrimaryColumn } from 'typeorm';
 import { Palavras } from './palavras.entity';
 import { Categorias } from '../../categorias/entities/categorias.entity';
 
-// Entidade associativa
-// Armazena a relação muitos-para-muitos entre Palavras e Categorias
 @Entity('palavras_categorias')
 export class PalavrasCategorias {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'int' })
   palavra_id!: number;
 
-  @PrimaryColumn()
-  categoria_id!: number;
-
-  @ManyToOne(() => Palavras)
-  @JoinColumn({ name: 'id_palavra' })
+  @ManyToOne(() => Palavras, (palavra) => palavra.categorias, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'palavra_id' })
   palavra!: Palavras;
 
-  @ManyToOne(() => Categorias)
-  @JoinColumn({ name: 'id_categoria' })
+  @PrimaryColumn({ type: 'int' })
+  categoria_id!: number;
+
+  @ManyToOne(() => Categorias, (categoria) => categoria.palavras, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'categoria_id' })
   categoria!: Categorias;
 }

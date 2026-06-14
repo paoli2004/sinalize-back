@@ -36,12 +36,11 @@ export class Palavras {
   @Column({ type: 'timestamp', nullable: true })
   atualizado_em?: Date;
 
-  // implementar no service
-  // @ManyToMany(() => Categorias, (categoria) => categoria.palavras)
-  // @JoinTable({
-  //   name: 'palavras_categorias',
-  //   joinColumn: { name: 'palavra_id', referencedColumnName: 'id' },
-  //   inverseJoinColumn: { name: 'categoria_id', referencedColumnName: 'id' },
-  // })
-  // categorias!: Categorias[];
+  @ManyToMany(() => Categorias, (categoria) => categoria.palavras)
+  @JoinTable({
+    name: 'palavras_categorias',
+    joinColumn: { name: 'palavra_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'categoria_id', referencedColumnName: 'id' },
+  })
+  categorias!: Categorias[];
 }

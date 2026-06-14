@@ -9,8 +9,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { PalavrasService } from './palavras.service';
-import { CreatePalavrasDto } from './dto/createPalavras.dto';
-import { UpdatePalavrasDto } from './dto/updatePalavras.dto';
+import { CreatePalavraDto } from './dto/createPalavra.dto';
+import { UpdatePalavraDto } from './dto/updatePalavra.dto';
 
 @Controller('palavras')
 export class PalavrasController {
@@ -27,7 +27,7 @@ export class PalavrasController {
   }
 
   @Post()
-  async createPalavra(@Body() createPalavraDto: CreatePalavrasDto) {
+  async createPalavra(@Body() createPalavraDto: CreatePalavraDto) {
     const newPalavra =
       await this.palavrasService.createPalavras(createPalavraDto);
 
@@ -39,7 +39,7 @@ export class PalavrasController {
 
   @Patch(':id')
   async updatePalavra(
-    @Body() updatePalavraDto: UpdatePalavrasDto,
+    @Body() updatePalavraDto: UpdatePalavraDto,
     @Param('id', ParseIntPipe) id: number,
   ) {
     const updatedPalavra = await this.palavrasService.updatePalavra(

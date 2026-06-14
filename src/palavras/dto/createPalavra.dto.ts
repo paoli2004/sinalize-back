@@ -1,7 +1,14 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  isNotEmpty,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { ValidationMessagesHelper } from '../../common/helpers/validationMessages.helper';
 
-export class CreatePalavrasDto {
+export class CreatePalavraDto {
   @IsString({ message: ValidationMessagesHelper.invalidMessage('palavra') })
   @IsNotEmpty({ message: ValidationMessagesHelper.requiredMessage('palavra') })
   @MaxLength(255, {
@@ -17,4 +24,16 @@ export class CreatePalavrasDto {
     message: ValidationMessagesHelper.maxLengthMessage('descrição', 400),
   })
   descricao!: string;
+
+  @IsArray({
+    message: ValidationMessagesHelper.invalidFormatMessage('categoryIds'),
+  })
+  @IsInt({
+    each: true,
+    message: ValidationMessagesHelper.isNotIntegerMessage('categoryIds'),
+  })
+  @IsNotEmpty({
+    message: ValidationMessagesHelper.isNotAssociateToCategoryMessage(),
+  })
+  categoryIds!: number[];
 }
