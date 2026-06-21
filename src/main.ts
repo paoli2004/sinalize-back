@@ -16,6 +16,10 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: 'http://localhost:5173', // porta do front
+  });
+
   await app.listen(port);
 
   Logger.log(
