@@ -57,6 +57,16 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Run migrations
+
+```bash
+# run all migrations
+$ npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/data-source.ts
+
+# equalize bd with local changes
+$ npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/migrations/MIGRATION_NAME -d src/data-source.ts
+```
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
