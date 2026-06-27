@@ -63,7 +63,7 @@ $ npm run test:cov
 # run all migrations
 $ npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/data-source.ts
 
-# equalize bd with local changes
+# equalize db with local changes
 $ npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/migrations/MIGRATION_NAME -d src/data-source.ts
 ```
 
