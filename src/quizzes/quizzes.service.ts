@@ -44,7 +44,6 @@ export class QuizzesService {
             palavra: {
               id: true,
               palavra: true,
-              descricao: true,
               categorias: {
                 id: true,
                 nome: true,
@@ -81,7 +80,6 @@ export class QuizzesService {
           palavra: {
             id: true,
             palavra: true,
-            descricao: true,
             categorias: {
               id: true,
               nome: true,

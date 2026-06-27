@@ -28,7 +28,6 @@ export class PalavrasService {
         select: {
           id: true,
           palavra: true,
-          descricao: true,
           criado_em: true,
           atualizado_em: true,
           criado_por: {
@@ -59,7 +58,6 @@ export class PalavrasService {
       select: {
         id: true,
         palavra: true,
-        descricao: true,
         criado_em: true,
         criado_por: {
           id: true,

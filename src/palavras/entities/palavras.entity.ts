@@ -19,9 +19,6 @@ export class Palavras {
   @Column({ length: 255 })
   palavra!: string;
 
-  @Column({ length: 400 })
-  descricao!: string;
-
   @ManyToOne(() => Usuarios, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'criado_por' })
   criado_por!: Usuarios;

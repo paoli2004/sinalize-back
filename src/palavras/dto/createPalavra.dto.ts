@@ -16,15 +16,6 @@ export class CreatePalavraDto {
   })
   palavra!: string;
 
-  @IsString({ message: ValidationMessagesHelper.invalidMessage('descrição') })
-  @IsNotEmpty({
-    message: ValidationMessagesHelper.requiredMessage('descrição'),
-  })
-  @MaxLength(400, {
-    message: ValidationMessagesHelper.maxLengthMessage('descrição', 400),
-  })
-  descricao!: string;
-
   @IsArray({
     message: ValidationMessagesHelper.invalidFormatMessage('categoryIds'),
   })
